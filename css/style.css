@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+header {
+    font-size: 4vmin; /*4% of whatever is smaller, width or height*/
+    color: darkgray;
+    letter-spacing: 1vmin;
+    margin-bottom: 3vmin;
+}
+
+h1 {
+    font-size: 3vmin;
+    color: darkgray;
+    margin-bottom: 3vmin;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 20vmin);
+    grid-template-rows: repeat(3, 20vmin);
+    gap: 1vmin;
+    background-color: black;
+}
+
+#board > div {
+    background-color: grey;
+    border-radius: 5%;
+}
+
+button {
+    margin-top: 4vmin;
+    padding: 2vmin;
+    font-size: 2vmin;
+    border-radius: 4vmin;
+    border: 0.1vmin solid grey;
+    color: grey;
+}
+
+button:hover {
+    color: white;
+    background-color: darkgray;
+}
+
+header, h1, button {
+    text-transform: capitalize;
+}
