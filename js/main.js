@@ -8,25 +8,25 @@ const COLOURS = {
 //   1.2) Define the 8 possible winning combinations, each containing three indexes of the board that make a winner if they hold the same player value.
 /*
 horizonal win:
-if(state.board[0] === state.board[1] && state.board[2])
+if(state.board[0] === playersTurn && state.board[1] === playersTurn && state.board[2] === playersTurn)
 1)[n, n, n, 0, 0, 0, 0, 0, 0]
-if(state.board[3] === state.board[4] && state.board[5])
+if(state.board[3] === playersTurn && state.board[4] === playersTurn && state.board[5] === playersTurn)
 2)[0, 0, 0, n, n, n, 0, 0, 0]
-if(state.board[6] === state.board[7] && state.board[8])
+if(state.board[6] === playersTurn && state.board[7] === playersTurn && state.board[8] === playersTurn)
 3)[0, 0, 0, 0, 0, 0, n, n, n]
 
 verical win:
-if(state.board[0] === state.board[3] && state.board[6])
+if(state.board[0] === playersTurn && state.board[3] === playersTurn && state.board[6] === playersTurn)
 4)[n, 0, 0, n, 0, 0, n, 0, 0]
-if(state.board[1] === state.board[4] && state.board[7])
+if(state.board[1] === playersTurn && state.board[4] === playersTurn && state.board[7] === playersTurn)
 5)[0, n, 0, 0, n, 0, 0, n, 0]
-if(state.board[3] === state.board[5] && state.board[8])
+if(state.board[2] === playersTurn && state.board[5] === playersTurn && state.board[8] === playersTurn)
 6)[0, 0, n, 0, 0, n, 0, 0, n]
 
 diagonal win:
-if(state.board[0] === state.board[4] && state.board[8])
+if(state.board[0] === playersTurn && state.board[4] === playersTurn && state.board[8] === playersTurn)
 7)[n, 0, 0, 0, n, 0, 0, 0, n]
-if(state.board[2] === state.board[4] && state.board[6])
+if(state.board[2] === playersTurn && state.board[4] === playersTurn && state.board[6] === playersTurn)
 8)[0, 0, n, 0, n, 0, n, 0, 0]
 
 */
@@ -69,13 +69,12 @@ function handleClick(clickEvent){
             //check if item in state.board is equal to 0. If it is, update it to current player's value. If not, do nothing.
             if(state.board[index] === 0){
                 state.board[index] = state.turn;
-                let result = checkWinner();
+                let result = checkWinner(state.turn);
                 console.log(result);
-                if(result !== undefined && result !== 0){
-                    console.log("winner is: " + state.turn);
+                if(result !== 0 && result !== undefined){
+                    console.log("winner is: " + COLOURS[state.turn]);
                 }
                 state.turn *= -1;
-                // console.log(state.board);
             }
             else{
                 return;
@@ -84,41 +83,58 @@ function handleClick(clickEvent){
     });
     //update board with new values
     render();
-
 };
 
-function checkWinner(){
-    if(state.board[0] === state.board[1] && state.board[2]){
-        // state.winner = true;
-        return state.board[0];
+function checkWinner(playersTurn){
+    if(state.board[0] === playersTurn && state.board[1] === playersTurn && state.board[2] === playersTurn){
+        if (state.board[0] !== 0){
+            return state.board[0];
+        } 
     }
-//     else if (state.board[3] === state.board[4] && state.board[5]){
-//         return state.board[0];
-//     }
-//     else if (state.board[6] === state.board[7] && state.board[8]){
-//         return state.board[0];
-//     }
-//     else if (state.board[6] === state.board[7] && state.board[8]){
-//         return state.board[0];
-//     }
-//     else if (state.board[6] === state.board[7] && state.board[8]){
-//         return state.board[0];
-//     }
-
-
-// verical win:
-// if(state.board[0] === state.board[3] && state.board[6])
-// 4)[n, 0, 0, n, 0, 0, n, 0, 0]
-// if(state.board[1] === state.board[4] && state.board[7])
-// 5)[0, n, 0, 0, n, 0, 0, n, 0]
-// if(state.board[3] === state.board[5] && state.board[8])
-// 6)[0, 0, n, 0, 0, n, 0, 0, n]
-
-// diagonal win:
-// if(state.board[0] === state.board[4] && state.board[8])
-// 7)[n, 0, 0, 0, n, 0, 0, 0, n]
-// if(state.board[2] === state.board[4] && state.board[6])
-
+    else if(state.board[3] === playersTurn && state.board[4] === playersTurn && state.board[5] === playersTurn){
+        if(state.board[3] !== 0){
+            return state.board[3];
+        }
+    }
+    else if (state.board[6] === playersTurn && state.board[7] === playersTurn && state.board[8] === playersTurn){
+        console.log(state.board[6])
+        if(state.board[6] !== 0){
+            return state.board[6];
+        }
+    }
+    else if (state.board[0] === playersTurn && state.board[3] === playersTurn && state.board[6] === playersTurn){
+        console.log(state.board[0])
+        if(state.board[0] !== 0){
+            return state.board[0];
+        }
+    }
+    else if (state.board[1] === playersTurn && state.board[4] === playersTurn && state.board[7] === playersTurn){
+        console.log(state.board[1])
+        if(state.board[1] !== 0){
+            return state.board[1];
+        }
+    }
+    else if (state.board[2] === playersTurn && state.board[5] === playersTurn && state.board[8] === playersTurn){
+        console.log(state.board[5])
+        if(state.board[5] !== 0){
+            return state.board[5];
+        }
+    }
+    else if (state.board[0] === playersTurn && state.board[4] === playersTurn && state.board[8] === playersTurn){
+        console.log(state.board[0])
+        if(state.board[0] !== 0){
+            return state.board[0];
+        }
+    }
+    else if (state.board[2] === playersTurn && state.board[4] === playersTurn && state.board[6] === playersTurn){
+        console.log(state.board[2])
+        if(state.board[2] !== 0){
+            return state.board[2];
+        }
+    }
+    else{
+        return 0;
+    }
 }
 
 function renderBoard(){
