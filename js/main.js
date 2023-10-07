@@ -6,7 +6,30 @@ const COLOURS = {
 }
 
 //   1.2) Define the 8 possible winning combinations, each containing three indexes of the board that make a winner if they hold the same player value.
+/*
+horizonal win:
+if(state.board[0] === state.board[1] && state.board[2])
+1)[n, n, n, 0, 0, 0, 0, 0, 0]
+if(state.board[3] === state.board[4] && state.board[5])
+2)[0, 0, 0, n, n, n, 0, 0, 0]
+if(state.board[6] === state.board[7] && state.board[8])
+3)[0, 0, 0, 0, 0, 0, n, n, n]
 
+verical win:
+if(state.board[0] === state.board[3] && state.board[6])
+4)[n, 0, 0, n, 0, 0, n, 0, 0]
+if(state.board[1] === state.board[4] && state.board[7])
+5)[0, n, 0, 0, n, 0, 0, n, 0]
+if(state.board[3] === state.board[5] && state.board[8])
+6)[0, 0, n, 0, 0, n, 0, 0, n]
+
+diagonal win:
+if(state.board[0] === state.board[4] && state.board[8])
+7)[n, 0, 0, 0, n, 0, 0, 0, n]
+if(state.board[2] === state.board[4] && state.board[6])
+8)[0, 0, n, 0, n, 0, n, 0, 0]
+
+*/
 /*----- state variables -----*/
 const state = {
     board: null,
@@ -27,47 +50,74 @@ elements.playAgain.addEventListener('click', init);
 
 
 /*----- functions -----*/
-
-// 4) Upon loading the app should:
-//   4.1) Initialize the state variables:
-//     4.1.1) Initialize the board array to 9 nulls to represent empty squares. The 9 elements will "map" to each square, where 
 init();
 
 function init(){
     state.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    
     state.turn = 1;
     state.winner = null;
     render();
 }
 
-function handleClick(event){
-// 5) Handle a player clicking a square:
-//   5.1) Obtain the index of the square that was clicked by either:
-//     5.1.1) "Extracting" the index from an id assigned to the element in the HTML, or
-//     5.1.2) Looping through the cached square elements using a for loop and breaking out when the current square element equals the event object's target.
-
-    const clickedSquare = event.target;
-    // console.log(clickedSquare);
-
-    // const clickedIndex = [...elements.squares].indexOf(event.target);
-    // console.log("clicked index " + clickedIndex);
-
-    // const trialRun = elements.squares[clickedIndex];
-    // console.log(trialRun)
-
-    elements.squares.forEach(function(event, index){
-        if (clickedSquare === event){
+function handleClick(clickEvent){
+    //get value of clicked item
+    const clickedSquare = clickEvent.target;
+    //loop through cached elements
+    elements.squares.forEach(function(value, index){
+        //check if clicked item matches value in cached item
+        if (clickedSquare === value){
+            //check if item in state.board is equal to 0. If it is, update it to current player's value. If not, do nothing.
             if(state.board[index] === 0){
                 state.board[index] = state.turn;
-            };
-            console.log(event);
-            console.log("this won't work");
+                let result = checkWinner();
+                console.log(result);
+                if(result !== undefined && result !== 0){
+                    console.log("winner is: " + state.turn);
+                }
+                state.turn *= -1;
+                // console.log(state.board);
+            }
+            else{
+                return;
+            }
         };
-    })
-
-    state.turn *= -1;
+    });
+    //update board with new values
     render();
+
+};
+
+function checkWinner(){
+    if(state.board[0] === state.board[1] && state.board[2]){
+        // state.winner = true;
+        return state.board[0];
+    }
+//     else if (state.board[3] === state.board[4] && state.board[5]){
+//         return state.board[0];
+//     }
+//     else if (state.board[6] === state.board[7] && state.board[8]){
+//         return state.board[0];
+//     }
+//     else if (state.board[6] === state.board[7] && state.board[8]){
+//         return state.board[0];
+//     }
+//     else if (state.board[6] === state.board[7] && state.board[8]){
+//         return state.board[0];
+//     }
+
+
+// verical win:
+// if(state.board[0] === state.board[3] && state.board[6])
+// 4)[n, 0, 0, n, 0, 0, n, 0, 0]
+// if(state.board[1] === state.board[4] && state.board[7])
+// 5)[0, n, 0, 0, n, 0, 0, n, 0]
+// if(state.board[3] === state.board[5] && state.board[8])
+// 6)[0, 0, n, 0, 0, n, 0, 0, n]
+
+// diagonal win:
+// if(state.board[0] === state.board[4] && state.board[8])
+// 7)[n, 0, 0, 0, n, 0, 0, 0, n]
+// if(state.board[2] === state.board[4] && state.board[6])
 
 }
 
@@ -78,6 +128,24 @@ function renderBoard(){
         square.style.backgroundColor = COLOURS[value];
     })
 } 
+
+function render() {
+    renderBoard();
+    renderMessage();
+}
+
+function renderMessage(){
+    if (state.winner) {
+        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.winner] }">${ COLOURS[state.winner] }s wins!</span>`;    
+    }
+    else {
+        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.turn] }">${ COLOURS[state.turn] }'s turn</span>`;
+    }
+    // TODO: show tie
+    
+}
+
+
 //   5.2) If the board has a value at the index, immediately return because that square is already taken.
 //   5.3) If winner is not null, immediately return because the game is over.
 //   5.4) Update the board array at the index with the value of turn.
@@ -90,39 +158,3 @@ function renderBoard(){
 //   5.7) If there's no winner, check if there's a tie:
 //     5.7.1) Set winner to 'T' if there are no more nulls in the board array.
 //   5.8) All state has been updated, so render the state to the page (step 4.2).
-
-function render() {
-    renderBoard();
-    renderMessage();
-    // renderControls();
-}
-
-
-
-function renderMessage(){
-    if (state.winner) {
-        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.winner] }">${ COLOURS[state.winner] }</span>'s wins!`;    
-    }
-    else {
-        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.turn] }">${ COLOURS[state.turn] }'s turn</span>`;
-    }
-    // TODO: show tie
-    
-    
-}
-// index 0 maps to the top-left square and index 8 maps to the bottom-right square.
-//     4.1.2) Initialize whose turn it is to 1 (player 'X'). Player 'O' will be represented by -1.
-//     4.1.3) Initialize winner to null to represent that there is no winner or tie yet. Winner will hold the player value (1 or -1) if there's a winner. Winner will hold a 'T' if there's a tie. 
-//   4.2) Render those state variables to the page:
-//     4.2.1) Render the board:
-//       4.2.1.1) Loop over each of the 9 elements that represent the squares on the page, and for each iteration:
-//         4.2.1.1.2) Use the index of the iteration to access the mapped value from the board array.
-//         4.3.1.1.3) Set the background color of the current element by using the value as a key on the colors lookup object (constant).
-//     4.2.2) Render a message:
-//       4.2.2.1) If winner has a value other than null (game still in progress), render whose turn it is - use the color name for the player, converting it to upper case.
-//       4.2.2.2) If winner is equal to 'T' (tie), render a tie message.
-//       4.2.2.3) Otherwise, render a congratulatory message to which player has won - use the color name for the player, converting it to uppercase.
-//   4.3) Wait for the user to click a square
-
-// 6) Handle a player clicking the replay button:
-//   6.1) Do steps 4.1 (initialize the state variables) and 4.2 (render).
