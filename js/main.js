@@ -189,7 +189,7 @@ function renderMessage(){
 // ---- PLEASE NOTE, I DID NOT WRITE THE BELOW CODE ----//
 
 // Source for instructions: https://dev.to/official_fire/creating-a-confetti-effect-in-5-minutes-16h3
-// Soure for confetti.js file: https://github.com/CoderZ90/confetti/blob/main/confetti.js
+// Source for confetti.js file: https://github.com/CoderZ90/confetti/blob/main/confetti.js
 
 // for starting the confetti 
 const start = () => {
