@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    
 }
 
 body {
@@ -13,10 +14,12 @@ body {
 }
 
 header {
-    font-size: 4vmin; /*4% of whatever is smaller, width or height*/
-    color: darkgray;
+    font-size: 5vmin; /*4% of whatever is smaller, width or height*/
+    color: #02c5e3;
     letter-spacing: 1vmin;
     margin-bottom: 3vmin;
+    font-family: 'Gochi Hand', cursive;
+    
 }
 
 #board {
@@ -38,16 +41,14 @@ button {
     font-size: 2vmin;
     border-radius: 4vmin;
     border: 0.1vmin solid grey;
-    color: grey;
+    color: black;
+    background-color: #02c5e3;
+    font-family: 'Gochi Hand', cursive;
 }
 
 button:hover {
-    color: white;
-    background-color: darkgray;
-}
-
-header, h1, button {
-    text-transform: capitalize;
+    color: black;
+    background-color: #91dbe6;
 }
 
 #playerX, #playerO{
@@ -61,11 +62,12 @@ header, h1, button {
 
 h1 {
     font-size: 3vmin;
-    color: darkgray;
+    color: #02c5e3;
     margin-bottom: 3vmin;
     grid-column-start: 2;
     grid-column-end: 4;
     place-self: center;
+    font-family: 'Special Elite', cursive;
 }
 
 #displayText {
@@ -73,3 +75,13 @@ h1 {
     grid-template-columns: repeat(4, 10vmin);
     grid-template-rows: 10vmin;
 }
+
+#pretty {
+    display: flex;
+    flex-direction: row;
+}
+
+.decoration {
+    height: 1.5vmin;
+}
+
