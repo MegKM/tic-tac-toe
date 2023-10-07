@@ -41,11 +41,11 @@ const state = {
 const elements = {
     message: document.querySelector("h1"),
     playAgain: document.querySelector("button"),
-    squares: document.querySelectorAll("#board > div")
+    squares: document.querySelectorAll("#board > div"),
 }
 
 /*----- event listeners -----*/
-document.getElementById("board").addEventListener('click', handleClick);
+
 elements.playAgain.addEventListener('click', init);
 
 
@@ -56,6 +56,7 @@ function init(){
     state.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     state.turn = 1;
     state.winner = null;
+    document.getElementById("board").addEventListener('click', handleClick);
     render();
 }
 
@@ -70,9 +71,12 @@ function handleClick(clickEvent){
             if(state.board[index] === 0){
                 state.board[index] = state.turn;
                 let result = checkWinner(state.turn);
-                console.log(result);
                 if(result !== 0 && result !== undefined){
+                    state.winner = true;
                     console.log("winner is: " + COLOURS[state.turn]);
+                    render();
+                    document.getElementById("board").removeEventListener("click", handleClick);
+                    return;
                 }
                 state.turn *= -1;
             }
@@ -97,37 +101,31 @@ function checkWinner(playersTurn){
         }
     }
     else if (state.board[6] === playersTurn && state.board[7] === playersTurn && state.board[8] === playersTurn){
-        console.log(state.board[6])
         if(state.board[6] !== 0){
             return state.board[6];
         }
     }
     else if (state.board[0] === playersTurn && state.board[3] === playersTurn && state.board[6] === playersTurn){
-        console.log(state.board[0])
         if(state.board[0] !== 0){
             return state.board[0];
         }
     }
     else if (state.board[1] === playersTurn && state.board[4] === playersTurn && state.board[7] === playersTurn){
-        console.log(state.board[1])
         if(state.board[1] !== 0){
             return state.board[1];
         }
     }
     else if (state.board[2] === playersTurn && state.board[5] === playersTurn && state.board[8] === playersTurn){
-        console.log(state.board[5])
         if(state.board[5] !== 0){
             return state.board[5];
         }
     }
     else if (state.board[0] === playersTurn && state.board[4] === playersTurn && state.board[8] === playersTurn){
-        console.log(state.board[0])
         if(state.board[0] !== 0){
             return state.board[0];
         }
     }
     else if (state.board[2] === playersTurn && state.board[4] === playersTurn && state.board[6] === playersTurn){
-        console.log(state.board[2])
         if(state.board[2] !== 0){
             return state.board[2];
         }
@@ -152,7 +150,7 @@ function render() {
 
 function renderMessage(){
     if (state.winner) {
-        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.winner] }">${ COLOURS[state.winner] }s wins!</span>`;    
+        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.turn] }">${ COLOURS[state.turn] }s wins!</span>`;    
     }
     else {
         elements.message.innerHTML = `<span style="color: ${ COLOURS[state.turn] }">${ COLOURS[state.turn] }'s turn</span>`;
