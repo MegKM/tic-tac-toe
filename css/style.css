@@ -19,12 +19,6 @@ header {
     margin-bottom: 3vmin;
 }
 
-h1 {
-    font-size: 3vmin;
-    color: darkgray;
-    margin-bottom: 3vmin;
-}
-
 #board {
     display: grid;
     grid-template-columns: repeat(3, 20vmin);
@@ -54,4 +48,28 @@ button:hover {
 
 header, h1, button {
     text-transform: capitalize;
+}
+
+#playerX, #playerO{
+    height: 5vmin;
+    place-self: center;
+}
+
+#playerO {
+    grid-column-start: 4;
+}
+
+h1 {
+    font-size: 3vmin;
+    color: darkgray;
+    margin-bottom: 3vmin;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    place-self: center;
+}
+
+#displayText {
+    display: grid;
+    grid-template-columns: repeat(4, 10vmin);
+    grid-template-rows: 10vmin;
 }

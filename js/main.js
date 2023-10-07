@@ -1,8 +1,14 @@
 /*----- constants -----*/
+
 const COLOURS = {
     "0": null,
-    "1": "green",
-    "-1": "purple"
+    "1": "<img height=180px src='assets/playerX.png'>",
+    "-1": "<img height=180px src='assets/playerO.png'>"
+}
+
+const SYMBOLS = {
+    "1": "X",
+    "-1": "O"
 }
 
 //   1.2) Define the 8 possible winning combinations, each containing three indexes of the board that make a winner if they hold the same player value.
@@ -44,6 +50,12 @@ const elements = {
     squares: document.querySelectorAll("#board > div"),
 }
 
+// const img = document.createElement("img");
+// img.src = "assets/playerX.png";
+// const src = document.getElementById("#square0");
+// src.appendChild(img);
+// testRun.innerHTML = <img src="assets/playerX.png"/>
+
 /*----- event listeners -----*/
 
 elements.playAgain.addEventListener('click', init);
@@ -69,6 +81,7 @@ function handleClick(clickEvent){
         if (clickedSquare === value){
             //check if item in state.board is equal to 0. If it is, update it to current player's value. If not, do nothing.
             if(state.board[index] === 0){
+                let turnCount = 
                 state.board[index] = state.turn;
                 let result = checkWinner(state.turn);
                 if(result !== 0 && result !== undefined){
@@ -139,7 +152,7 @@ function renderBoard(){
     state.board.forEach(function (value, index) {
         const id = `square${index}`;
         const square = document.getElementById(id);
-        square.style.backgroundColor = COLOURS[value];
+        square.innerHTML= COLOURS[value];
     })
 } 
 
@@ -150,10 +163,11 @@ function render() {
 
 function renderMessage(){
     if (state.winner) {
-        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.turn] }">${ COLOURS[state.turn] }s wins!</span>`;    
+        elements.message.innerHTML = `<span style="color: ${ SYMBOLS[state.turn] }">${ SYMBOLS[state.turn] } wins!</span>`;  
+        // <img height=180px src='assets/playerX.png'> 
     }
     else {
-        elements.message.innerHTML = `<span style="color: ${ COLOURS[state.turn] }">${ COLOURS[state.turn] }'s turn</span>`;
+        elements.message.innerHTML = `<span style="color: ${ SYMBOLS[state.turn] }">${ SYMBOLS[state.turn] }'s turn</span>`;
     }
     // TODO: show tie
     
