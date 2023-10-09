@@ -85,4 +85,15 @@ h1 {
     height: 1.5vmin;
 }
 
+.crossPlayer {
+    height: 180vim;
+    background-image: url('../assets/playerX.png');
+    background-size: contain;
+}
+
+.naughtPlayer {
+    height: 180vim;
+    background-image: url('../assets/playerO.png');
+    background-size: contain;
+}
 

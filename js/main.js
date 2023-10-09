@@ -1,9 +1,8 @@
 /*----- constants -----*/
-
 const COLOURS = {
     "0": null,
-    "1": "<img height=180px src='assets/playerX.png'>",
-    "-1": "<img height=180px src='assets/playerO.png'>"
+    "1": "crossPlayer",
+    "-1": "naughtPlayer"
 }
 
 const SYMBOLS = {
@@ -51,11 +50,6 @@ const elements = {
     squares: document.querySelectorAll("#board > div"),
 }
 
-// const img = document.createElement("img");
-// img.src = "assets/playerX.png";
-// const src = document.getElementById("#square0");
-// src.appendChild(img);
-// testRun.innerHTML = <img src="assets/playerX.png"/>
 
 /*----- event listeners -----*/
 
@@ -84,7 +78,6 @@ function handleClick(clickEvent){
             //check if item in state.board is equal to 0. If it is, update it to current player's value. If not, do nothing.
             if(state.board[index] === 0){
                 state.turnCount += 1;
-                console.log(state.turnCount);
                 state.board[index] = state.turn;
                 let result = checkWinner(state.turn);
                 if(result !== 0 && result !== undefined){
@@ -160,7 +153,7 @@ function renderBoard(){
     state.board.forEach(function (value, index) {
         const id = `square${index}`;
         const square = document.getElementById(id);
-        square.innerHTML= COLOURS[value];
+        square.className = COLOURS[value];
     })
 } 
 
